@@ -3,27 +3,36 @@
 
 angular.module('LunchCheck',[])
 
-.controller('MyFirstController',function($scope)
+.controller('LunchCheckController',['$scope',LunchCheckController]);
+
+function LunchCheckController($scope)
 {
-  $scope.name="";
-  $scope.totalvalue=0;
-$scope.displayNumeric=function()
+  $scope.lunchmenu="";
+  $scope.Message="";
+  $scope.splitMenu=function()
 {
-  var totalNamevalue=calculateNumericString($scope.name);
-  $scope.totalvalue=totalNamevalue;
-};
-function calculateNumericString(string)
-{
-  var totalStringvalue=0;
-  for(var i=0;i<string.length;i++)
+  var totalitems=0;
+  var arrayOfItemsInMenu=$scope.lunchmenu.split(",");
+  if(arrayOfItemsInMenu!="")
   {
-  totalStringvalue+=string.charCodeAt(i);
+  for(var i=0;i<arrayOfItemsInMenu.length;i++)
+  totalitems++;
 }
-return totalStringvalue;
+  return totalitems
+};
+
+$scope.DisplayMessage=function()
+{
+  var getheitems=$scope.splitMenu();
+  if (getheitems==0)
+  $scope.Message="Please enter data first";
+  if(getheitems>0 && getheitems<=3)
+  $scope.Message="Enjoy!";
+  if(getheitems>3)
+  $scope.Message="Too much!";
 
 };
 
-
-});
+}
 
 })();
